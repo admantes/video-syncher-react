@@ -20,19 +20,34 @@ class App extends Component {
     navigator.clipboard.readText().then(clipText => {
       clipText.split("\n").map( item => newCaptions.push(item));
       this.setState({
-        captions: newCaptions
+        captions: newCaptions,
+        curCaptionIndex: 0
         
       })
      }
-    )
-        
- 
+    ) 
   }
 
+  markCuePoint = () =>  {
+    console.log("marking");
+    if(this.state.curCaptionIndex < this.state.captions.length-1){
+      this.setState( {
+        curCaptionIndex: this.state.curCaptionIndex + 1      
+      })
+    }
+   
+  
+  }
+  
+  
   render() {   
     return ( 
        <div className="App">
-          <NavBar loadClipBoard={this.loadClipBoard}/>
+          <NavBar 
+            loadClipBoard={this.loadClipBoard} 
+            markCuePoint={this.markCuePoint}
+            />
+
           <LineBar />
           <CaptionBar currentCaption={this.state.captions[this.state.curCaptionIndex]}
               index={this.state.curCaptionIndex} total={this.state.captions.length}

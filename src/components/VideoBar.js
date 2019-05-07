@@ -4,17 +4,25 @@ import React, { Component } from 'react';
 class VideoBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {
+            surferInitialized: false
+          }
     }
 
-    componentDidUpdate(){
-        var wavesurfer = window.WaveSurfer.create({
-            container: '#waveform',
-            waveColor: 'violet',
-            progressColor: 'purple'
-        });
-        
-        wavesurfer.load('video.mp4');
+    componentDidMount(){
+        if(!this.state.surferInitialized){
+            var wavesurfer = window.WaveSurfer.create({
+                container: '#waveform',
+                waveColor: 'violet',
+                progressColor: 'purple'
+            });
+            
+            wavesurfer.load('video.mp4');
+
+            this.setState(  {
+                surferInitialized: true   
+               })
+        }
     }
 
     render() { 
