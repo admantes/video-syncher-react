@@ -11,7 +11,7 @@ class NavBar extends Component {
                 <nav className="blue-grey darken-1" role="navigation">
                 <div className="nav-wrapper"><a id="logo-container"  className="brand-logo">  &nbsp; Video Timer</a>
                 <ul className="right hide-on-med-and-down">
-                    <li> <a className="waves-effect waves-light btn  orange darken-3"><i className="material-icons left">archive</i>Load Clipboard</a></li>
+                    <li> <a className="waves-effect waves-light btn  orange darken-3" onClick={this.props.loadClipBoard}><i className="material-icons left">archive</i>Load Clipboard</a></li>
                     <li> <a className="waves-effect waves-light btn  amber darken-2"><i className="material-icons left">arrow_back</i>Previous Caption</a></li>
                     <li>  <a className="waves-effect waves-light btn  amber darken-2"><i className="material-icons left">arrow_forward</i>Next Caption</a></li>
                     <li>  <a className="waves-effect waves-light btn  orange darken-3"><i className="material-icons left">check_box</i>Mark Cuepoint</a></li>
