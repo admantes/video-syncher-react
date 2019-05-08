@@ -64,7 +64,7 @@ class VideoBar extends Component {
                          (item, index) => (                       
                             <li  className={"collection-item " + (( this.props.activeIndex == index) ? " blue lighten-4" : "") }
                              key={Math.random()+index.toString()} onClick={this.props.setCurrentIndex.bind(null,index)} >
-                             <div className="editable">  {item}
+                             <div>  {item}
                              <a  className="secondary-content"><i className="material-icons">create</i></a></div></li>               
                             )
                      )  
@@ -75,10 +75,9 @@ class VideoBar extends Component {
 
                 <ul className="collection with-header">
                     <li className="collection-header"><h5>Output</h5></li>
-                   <li className="collection-item">
-                   <textarea value={this.props.generatedCode} style={{height:200}}>
-                   {}
-                   </textarea></li>
+                    <li className="collection-item">
+                   <textarea value={this.props.generatedCode} style={{height:200}} /> 
+                   </li>
                 </ul>
               </div>
       

@@ -14,6 +14,8 @@ class App extends Component {
       curCaptionIndex: 0,
       cuePoints: [],
       currentVideoTime: 0,
+      indents: [],
+      bulletTypes: [],
       generateCode: ""
      }
   }
@@ -37,7 +39,8 @@ class App extends Component {
       this.setState({
         captions: newCaptions,
         curCaptionIndex: 0,
-        cuePoints: newCuePoints        
+        cuePoints: newCuePoints,
+        generatedCode: ""        
       })
      }
     ) 
@@ -102,10 +105,10 @@ console.log(genCode);
     console.log("marking");
     //Set CuePoint 
   let newCuePoints =  [...this.state.cuePoints];
-    newCuePoints[this.state.curCaptionIndex] = this.state.currentVideoTime
+    newCuePoints[this.state.curCaptionIndex] = this.state.currentVideoTime - 0.3
     let increment = 1;
     if(this.state.curCaptionIndex < this.state.captions.length-1){
-        increment = 1;
+      increment = 1;
     }else{
       increment = 0;
     }
