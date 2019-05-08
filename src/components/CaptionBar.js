@@ -24,9 +24,11 @@ class CaptionBar extends Component {
                 </div> 
                 <div className="col s9 m11">
                     <ul className="collection">                 
-                        <li className="collection-item   light-blue lighten-1"> 
+                        <li className="collection-item light-blue lighten-1 ">                           
+                        
+                          <span><h6>{this.props.currentCaption}</h6></span>
                           
-                          <span>{this.props.currentCaption}</span></li>
+                        </li>
                        
                       </ul>
                 </div> 

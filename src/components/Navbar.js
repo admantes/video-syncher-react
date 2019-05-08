@@ -16,8 +16,8 @@ class NavBar extends Component {
                 <div className="nav-wrapper"><a id="logo-container"  className="brand-logo">  &nbsp; Video Timer</a>
                 <ul className="right hide-on-med-and-down">
                     <li> <a className={BTN_ORANGE_D2} onClick={this.props.loadClipBoard}><i className="material-icons left">archive</i>Load Clipboard</a></li>
-                    <li> <a className={BTN_AMBER_D3} ><i className="material-icons left">arrow_back</i>Previous Caption</a></li>
-                    <li>  <a className={BTN_AMBER_D3}><i className="material-icons left">arrow_forward</i>Next Caption</a></li>
+                    <li> <a className={BTN_AMBER_D3}  onClick={this.props.prevCaption}><i className="material-icons left">arrow_back</i>Previous Caption</a></li>
+                    <li>  <a className={BTN_AMBER_D3}  onClick={this.props.nextCaption}><i className="material-icons left">arrow_forward</i>Next Caption</a></li>
                     <li>  <a className={BTN_ORANGE_D2} onClick={this.props.markCuePoint}><i className="material-icons left">check_box</i>Mark Cuepoint</a></li>
 
                     </ul>

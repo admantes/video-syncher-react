@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-
+import ReactDOM from "react-dom";
 
 class VideoBar extends Component {
     constructor(props) {
         super(props);
+        let activeStyle = "";
         this.state = {
-            surferInitialized: false
+            surferInitialized: false           
           }
     }
 
     componentDidMount(){
-        if(!this.state.surferInitialized){
+        
+      //Initialize Wave surfer once
+      if(!this.state.surferInitialized){
             var wavesurfer = window.WaveSurfer.create({
                 container: '#waveform',
                 waveColor: 'violet',
-                progressColor: 'purple'
+                progressColor: 'purple',
+                fillParent: true
             });
             
             wavesurfer.load('video.mp4');
@@ -23,7 +27,16 @@ class VideoBar extends Component {
                 surferInitialized: true   
                })
         }
+
+        let videoElement = document.getElementById("myVideo");
+
+        videoElement.ontimeupdate = () => {
+          this.props.updateVideoTime(videoElement.currentTime);
+        }
+
     }
+
+   
 
     render() { 
         return ( 
@@ -33,7 +46,7 @@ class VideoBar extends Component {
               <div className="col s12 m6">
                 <div className="icon-block">
                    
-                <video id="myVideo"  controls width="620">
+                <video id="myVideo"  controls width="900" >
                     <source src="video.mp4?token=1321654asdfas" type="video/mp4" />
                    
                     Your browser does not support HTML5 video.
@@ -48,14 +61,16 @@ class VideoBar extends Component {
                          
                  {
                      this.props.captions.map(
-                         (item, index) => (
-                            <li className="collection-item" key={Math.random()+index.toString()}><div> {item}<a  className="secondary-content"><i className="material-icons">create</i></a></div></li>               
+                         (item, index) => (                       
+                            <li  className={"collection-item " + (( this.props.activeIndex == index) ? " blue lighten-4" : "") }
+                             key={Math.random()+index.toString()} onClick={this.props.setCurrentIndex.bind(null,index)} >
+                             <div className="editable">  {item}
+                             <a  className="secondary-content"><i className="material-icons">create</i></a></div></li>               
                             )
                      )  
 
                  }
-                 
-                 
+                  
                 </ul>
               </div>
       
