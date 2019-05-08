@@ -44,7 +44,7 @@ class VideoBar extends Component {
  
             <div className="row">
               <div className="col s12 m6">
-                <div className="icon-block">
+               
                    
                 <video id="myVideo"  controls width="900" >
                     <source src="video.mp4?token=1321654asdfas" type="video/mp4" />
@@ -53,7 +53,7 @@ class VideoBar extends Component {
                   </video>
                  
                   <div id="waveform"></div>
-                </div>
+                
               </div>
       
               <div className="col s12 m6">
@@ -71,6 +71,14 @@ class VideoBar extends Component {
 
                  }
                   
+                </ul>
+
+                <ul className="collection with-header">
+                    <li className="collection-header"><h5>Output</h5></li>
+                   <li className="collection-item">
+                   <textarea value={this.props.generatedCode} style={{height:200}}>
+                   {}
+                   </textarea></li>
                 </ul>
               </div>
       

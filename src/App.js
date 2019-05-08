@@ -13,7 +13,8 @@ class App extends Component {
       captions: ["The captions will be displayed here", "Copy script from storyboard and click 'Load Clipboard' to load text here", "Play the Video and wait for specific part where the caption is said, and click 'Mark Cue Point'"],
       curCaptionIndex: 0,
       cuePoints: [],
-      currentVideoTime: 0
+      currentVideoTime: 0,
+      generateCode: ""
      }
   }
 
@@ -35,10 +36,50 @@ class App extends Component {
       console.log(newCuePoints);
       this.setState({
         captions: newCaptions,
-        curCaptionIndex: 0        
+        curCaptionIndex: 0,
+        cuePoints: newCuePoints        
       })
      }
     ) 
+  }
+
+  generateCode = () => {
+    console.log("generating code");
+    let genCode = "";
+    let kpArr = "var kpArr = [";
+    let kpTrackArr = "var kpTrackArr = [";
+    let kpIndentArr = "var kpIndentArr = [";
+    let bulletType = "var bulletType = [";
+
+    for(let i=0; i<this.state.captions.length-1; i++){
+      
+    }
+
+    this.state.captions.forEach(
+       ( item, index ) => {
+        if(index == this.state.captions.length-1){
+          kpArr += "'" + item + "']; \n ";
+          kpTrackArr += this.state.cuePoints[index] + "]; \n ";
+          kpIndentArr +=  " 0]; \n ";
+          bulletType +=  " 1]; \n ";
+        }else{
+          kpArr += "'" + item + "', ";
+          kpTrackArr += this.state.cuePoints[index] + ", ";
+          kpIndentArr +=  " 0, ";
+          bulletType +=  " 1, ";
+        }
+
+      }
+    )
+    
+    genCode = kpArr + kpTrackArr + kpIndentArr + bulletType;
+console.log(genCode);
+    this.setState(
+      {
+        generatedCode: genCode
+      }
+    );
+
   }
 
   prevCaption = () => {
@@ -101,6 +142,7 @@ class App extends Component {
             markCuePoint={this.markCuePoint}
             prevCaption={this.prevCaption}
             nextCaption={this.nextCaption}
+            generateCode={this.generateCode}
             />
 
           <LineBar />
@@ -109,6 +151,7 @@ class App extends Component {
           />
           <VideoBar captions={this.state.captions} activeIndex={this.state.curCaptionIndex} setCurrentIndex={this.setCurrentIndex}
             updateVideoTime={this.updateVideoTime}
+            generatedCode={this.state.generatedCode}
           />
       </div> 
     );
