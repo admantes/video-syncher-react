@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 
 class VideoBar extends Component {
     constructor(props) {
-        super(props);
-        let activeStyle = "";
+        super(props);        
         this.state = {
             surferInitialized: false           
           }

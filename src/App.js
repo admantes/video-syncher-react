@@ -30,7 +30,7 @@ class App extends Component {
       //Split the text per line and remove instances of these patterns (1), (1a), (2)... and so on
 
       clipText.split("\n").map( item => ( 
-           item.trim() == "" ? null : newCaptions.push( item.trim().replace( /\(\d*\w\)/, "" ) )  ) 
+           item.trim() === "" ? null : newCaptions.push( item.trim().replace( /\(\d*\w\)/, "" ) )  ) 
       );
 
       newCaptions.map( item =>  newCuePoints.push(0) );
@@ -60,7 +60,7 @@ class App extends Component {
 
     this.state.captions.forEach(
        ( item, index ) => {
-        if(index == this.state.captions.length-1){
+        if(index === this.state.captions.length-1){
           kpArr += "'" + item + "']; \n ";
           kpTrackArr += this.state.cuePoints[index] + "]; \n ";
           kpIndentArr +=  " 0]; \n ";
