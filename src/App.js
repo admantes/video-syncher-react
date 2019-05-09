@@ -77,13 +77,13 @@ class App extends Component {
         if(index === this.state.captions.length-1){
           kpArr += "'" + replaceChars(item) + "']; \n ";
           kpTrackArr += this.state.cuePoints[index] + "]; \n ";
-          kpIndentArr +=  " " + INDENT_VALUES[this.state.indents[index]]  + "]; \n ";
-          bulletType +=  " 1]; \n ";
+          kpIndentArr +=  INDENT_VALUES[this.state.indents[index]]  + "]; \n ";
+          bulletType +=  "1]; \n ";
         }else{
           kpArr += "'" + replaceChars(item) + "', ";
-          kpTrackArr += this.state.cuePoints[index] + ", ";
-          kpIndentArr +=  "  " + INDENT_VALUES[this.state.indents[index]]  + ", ";
-          bulletType +=  " 1, ";
+          kpTrackArr += this.state.cuePoints[index] + ",";
+          kpIndentArr +=  INDENT_VALUES[this.state.indents[index]]  + ",";
+          bulletType +=  "1,";
         }
 
       }
@@ -119,7 +119,7 @@ class App extends Component {
     console.log("marking");
     //Set CuePoint 
   let newCuePoints =  [...this.state.cuePoints];
-    newCuePoints[this.state.curCaptionIndex] = this.state.currentVideoTime - 0.3
+    newCuePoints[this.state.curCaptionIndex] = ( this.state.currentVideoTime - 0.3 ).toFixed(2);
     let increment = 1;
     if(this.state.curCaptionIndex < this.state.captions.length-1){
       increment = 1;
@@ -165,10 +165,10 @@ class App extends Component {
 
     
   updateVideoTime = (time) =>{
-   // console.log(e.target)
-
+     console.log(time)
+    //time = time.toFixed(2);
     this.setState( {
-      currentVideoTime: time  
+      currentVideoTime: time
     })
   }
 

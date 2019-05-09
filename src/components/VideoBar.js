@@ -30,7 +30,7 @@ class VideoBar extends Component {
         let videoElement = document.getElementById("myVideo");
 
         videoElement.ontimeupdate = () => {
-          this.props.updateVideoTime(videoElement.currentTime.toFixed(2));
+          this.props.updateVideoTime(videoElement.currentTime);
         }
 
     }
@@ -64,7 +64,7 @@ class VideoBar extends Component {
                  {
                      this.props.captions.map(
                          (item, index) => (                       
-                            <div  contenteditable className={"card-panel "+ (( this.props.activeIndex == index) ? " blue lighten-4" : "") }
+                            <div className={"card-panel "+ (( this.props.activeIndex == index) ? " blue lighten-4" : "") }
                              key={Math.random()+index.toString()} onClick={this.props.setCurrentIndex.bind(null,index)} >
                             <div>                              
                              <span className="badge  light-green darken-2 white-text"> {this.props.cuePoints[index]} </span>
