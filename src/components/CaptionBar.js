@@ -10,28 +10,29 @@ class CaptionBar extends Component {
     }
     render() { 
         return (
-            <div>
-    
-     
-            <div className="row">
-                <div className="col s3 m1">
-                    <ul className="collection">                 
-                        <li className={"collection-item " + ORANGE_D2} > 
-                          <span>  {this.props.index+1} of {this.props.total} </span> 
-                         </li>
-                       
-                      </ul>
+            <div style={{marginTop:-14}}> 
+            <div className="row" style={{height:50}}>
+               
+                <div className="col s3 m1 cyan lighten-1">                     
+                <span>  {this.props.index+1} of {this.props.total}  </span>     
+                             
+                              
+                              
+                </div>
+
+                <div className="col s9 m1 cyan darken-3">                    
+                             
+                             <a className="waves-effect waves-light btn-small" onClick={this.props.decreaseIndent}><i className="material-icons">arrow_back</i></a>
+                             <a className="waves-effect waves-light btn-small" onClick={this.props.increaseIndent}><i className="material-icons">arrow_forward</i></a>
+                           
                 </div> 
-                <div className="col s9 m11">
-                    <ul className="collection">                 
-                        <li className="collection-item light-blue lighten-1 ">                           
-                        
-                          <span><h6>{this.props.currentCaption}</h6></span>
-                          
-                        </li>
-                       
-                      </ul>
+
+                <div className="col s9 m10 cyan lighten-3">                    
+                          <span><h6>{this.props.currentCaption}</h6></span>  
                 </div> 
+
+
+
             </div> 
         
         </div>

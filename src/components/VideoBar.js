@@ -30,12 +30,18 @@ class VideoBar extends Component {
         let videoElement = document.getElementById("myVideo");
 
         videoElement.ontimeupdate = () => {
-          this.props.updateVideoTime(videoElement.currentTime);
+          this.props.updateVideoTime(videoElement.currentTime.toFixed(2));
         }
 
     }
 
-   
+   generateEmptySpace = (count) =>{
+     let sp = "";
+    for (let i = 0; i < count; i++) {
+      sp += ">";
+    }
+    return sp;
+   }
 
     render() { 
         return ( 
@@ -43,39 +49,42 @@ class VideoBar extends Component {
  
             <div className="row">
               <div className="col s12 m6">
-               
-                   
+                                
                 <video id="myVideo"  controls width="900" >
-                    <source src="video.mp4?token=1321654asdfas" type="video/mp4" />
-                   
+                    <source src="video.mp4?token=1321654asdfas" type="video/mp4" />                   
                     Your browser does not support HTML5 video.
                   </video>
                  
-                  <div id="waveform"></div>
-                
+                  <div id="waveform"></div>                
+
               </div>
       
               <div className="col s12 m6">
-                <ul className="collection with-header">
-                         
+                       
                  {
                      this.props.captions.map(
                          (item, index) => (                       
-                            <li  className={"collection-item " + (( this.props.activeIndex == index) ? " blue lighten-4" : "") }
+                            <div  contenteditable className={"card-panel "+ (( this.props.activeIndex == index) ? " blue lighten-4" : "") }
                              key={Math.random()+index.toString()} onClick={this.props.setCurrentIndex.bind(null,index)} >
-                             <div>  {item}
-                             <a  className="secondary-content"><i className="material-icons">create</i></a></div></li>               
+                            <div>                              
+                             <span className="badge  light-green darken-2 white-text"> {this.props.cuePoints[index]} </span>
+                            <span style={{color:"#F00"}}> 
+                            { 
+                              this.generateEmptySpace(this.props.indents[index])
+                              }
+                            </span>  <span class="input-field"> {item} </span>
+                               <a  className="secondary-content"><i className="material-icons">create</i></a></div>
+                             </div>               
                             )
                      )  
-
-                 }
-                  
-                </ul>
+                     
+                         }
+                
 
                 <ul className="collection with-header">
                     <li className="collection-header"><h5>Output</h5></li>
                     <li className="collection-item">
-                   <textarea value={this.props.generatedCode} style={{height:200}} /> 
+                       <textarea value={this.props.generatedCode} style={{height:200}} /> 
                    </li>
                 </ul>
               </div>

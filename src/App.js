@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import NavBar from './components/Navbar'
-import LineBar from './components/LineBar'
-import CaptionBar from './components/CaptionBar'
-import VideoBar from './components/VideoBar'
+import NavBar from './components/Navbar';
+import LineBar from './components/LineBar';
+import CaptionBar from './components/CaptionBar';
+import VideoBar from './components/VideoBar';
+
+import {replaceChars} from './helpers';
+import {INDENT_VALUES} from './config';
 
 import './App.css';
  
@@ -23,23 +26,34 @@ class App extends Component {
   loadClipBoard = () =>  {
    let newCaptions = [];
    let newCuePoints = [];
+   let newIndents = []; 
+   let newBullets = [];
 
    //Load Text from the Clipboard
-    navigator.clipboard.readText().then(clipText => {
+    navigator.clipboard.readText().then( clipText => {
 
       //Split the text per line and remove instances of these patterns (1), (1a), (2)... and so on
 
       clipText.split("\n").map( item => ( 
-           item.trim() === "" ? null : newCaptions.push( item.trim().replace( /\(\d*\w\)/, "" ) )  ) 
+           item.trim() === "" ? null : newCaptions.push( item
+            .trim()
+            .replace( /\(\d*\w\)/, "" )            
+            )  ) 
       );
 
-      newCaptions.map( item =>  newCuePoints.push(0) );
+      newCaptions.forEach( item => {
+         newCuePoints.push(0); 
+         newIndents.push(0);
+         newBullets.push(0);
+        });
 
       console.log(newCuePoints);
       this.setState({
         captions: newCaptions,
         curCaptionIndex: 0,
         cuePoints: newCuePoints,
+        indents: newIndents,
+        bulletTypes: newBullets,
         generatedCode: ""        
       })
      }
@@ -61,14 +75,14 @@ class App extends Component {
     this.state.captions.forEach(
        ( item, index ) => {
         if(index === this.state.captions.length-1){
-          kpArr += "'" + item + "']; \n ";
+          kpArr += "'" + replaceChars(item) + "']; \n ";
           kpTrackArr += this.state.cuePoints[index] + "]; \n ";
-          kpIndentArr +=  " 0]; \n ";
+          kpIndentArr +=  " " + INDENT_VALUES[this.state.indents[index]]  + "]; \n ";
           bulletType +=  " 1]; \n ";
         }else{
-          kpArr += "'" + item + "', ";
+          kpArr += "'" + replaceChars(item) + "', ";
           kpTrackArr += this.state.cuePoints[index] + ", ";
-          kpIndentArr +=  " 0, ";
+          kpIndentArr +=  "  " + INDENT_VALUES[this.state.indents[index]]  + ", ";
           bulletType +=  " 1, ";
         }
 
@@ -76,7 +90,7 @@ class App extends Component {
     )
     
     genCode = kpArr + kpTrackArr + kpIndentArr + bulletType;
-console.log(genCode);
+    console.log(genCode);
     this.setState(
       {
         generatedCode: genCode
@@ -120,6 +134,29 @@ console.log(genCode);
     
   }
   
+  
+  increaseIndent = () =>{
+    let newIndents = [...this.state.indents];
+    newIndents[this.state.curCaptionIndex] = this.instantiateWhenNull( newIndents[this.state.curCaptionIndex] + 1 );
+    this.setState( {
+      indents: newIndents
+    })
+  }
+
+  decreaseIndent = () =>{
+    let newIndents = [...this.state.indents];
+    newIndents[this.state.curCaptionIndex] = this.instantiateWhenNull( newIndents[this.state.curCaptionIndex] - 1);
+
+    this.setState( {
+      indents: newIndents
+    })
+  }
+
+  instantiateWhenNull = (val) => {
+    console.log(val);
+    return ( val === undefined || isNaN(val) || val < 0 ? 0 : val);
+  }
+  
   setCurrentIndex = (index) =>{
     this.setState( {
       curCaptionIndex: index    
@@ -151,10 +188,16 @@ console.log(genCode);
           <LineBar />
           <CaptionBar currentCaption={this.state.captions[this.state.curCaptionIndex]}
               index={this.state.curCaptionIndex} total={this.state.captions.length}
+              increaseIndent={this.increaseIndent}
+              decreaseIndent={this.decreaseIndent}
           />
-          <VideoBar captions={this.state.captions} activeIndex={this.state.curCaptionIndex} setCurrentIndex={this.setCurrentIndex}
+          <VideoBar captions={this.state.captions} 
+            activeIndex={this.state.curCaptionIndex} 
+            setCurrentIndex={this.setCurrentIndex}
+            cuePoints={this.state.cuePoints}
             updateVideoTime={this.updateVideoTime}
             generatedCode={this.state.generatedCode}
+            indents={this.state.indents}
           />
       </div> 
     );
