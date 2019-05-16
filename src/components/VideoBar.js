@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
-
+import {BTN_AMBER_D3} from "../config.js";
 class VideoBar extends Component {
     constructor(props) {
         super(props);        
@@ -11,23 +11,26 @@ class VideoBar extends Component {
 
     componentDidMount(){
         
+      var videoElement = document.getElementById("myVideo");
+
       //Initialize Wave surfer once
       if(!this.state.surferInitialized){
             var wavesurfer = window.WaveSurfer.create({
                 container: '#waveform',
                 waveColor: 'violet',
                 progressColor: 'purple',
-                fillParent: true
+                fillParent: true,
+                backend: 'MediaElement'
             });
-            
-            wavesurfer.load('video.mp4');
+              
+            wavesurfer.load(videoElement);
 
             this.setState(  {
                 surferInitialized: true   
                })
         }
 
-        let videoElement = document.getElementById("myVideo");
+       
 
         videoElement.ontimeupdate = () => {
           this.props.updateVideoTime(videoElement.currentTime);
@@ -50,9 +53,8 @@ class VideoBar extends Component {
             <div className="row">
               <div className="col s12 m6">
                                 
-                <video id="myVideo"  controls width="900" >
-                    <source src="video.mp4?token=1321654asdfas" type="video/mp4" />                   
-                    Your browser does not support HTML5 video.
+                <video id="myVideo"  controls width="850" src="video.mp4">
+                  
                   </video>
                  
                   <div id="waveform"></div>                
@@ -72,7 +74,7 @@ class VideoBar extends Component {
                             { 
                               this.generateEmptySpace(this.props.indents[index])
                               }
-                            </span>  <span class="input-field"> {item} </span>
+                            </span>  <span className="input-field"> {item} </span>
                                <a  className="secondary-content"><i className="material-icons">create</i></a></div>
                              </div>               
                             )
@@ -84,8 +86,12 @@ class VideoBar extends Component {
                 <ul className="collection with-header">
                     <li className="collection-header"><h5>Output</h5></li>
                     <li className="collection-item">
-                       <textarea value={this.props.generatedCode} style={{height:200}} /> 
+                       <textarea value={this.props.generatedCode} style={{height:200}} onChange={this.props.outputUpdate}/> 
                    </li>
+				     <li className="collection-item">
+					 <a className={BTN_AMBER_D3}  onClick={this.props.loadCode}><i className="material-icons left">arrow_forward</i>Load Code</a> 
+					 </li>
+				  
                 </ul>
               </div>
       

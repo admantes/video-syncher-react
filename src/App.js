@@ -19,7 +19,7 @@ class App extends Component {
       currentVideoTime: 0,
       indents: [],
       bulletTypes: [],
-      generateCode: ""
+      generatedCode: ""
      }
   }
 
@@ -171,7 +171,40 @@ class App extends Component {
       currentVideoTime: time
     })
   }
+  
+  loadCode = () => {
+	  if(this.state.generatedCode.trim() !== ""){
+		  var kpArr = [], kpTrackArr = [], kpIndentArr = [], bulletType = [];
+		 
+		 let list = this.state.generatedCode.split("var");
+		 
+		 for(var item of list){
+			if(item != ""){
+				 eval( item );
+				 console.log("var " + item );
+			}
+		 }
+		 
+		  let newCaptions = kpArr;
+		  
+		  this.setState({
+			  captions: kpArr,
+			  cuePoints: kpTrackArr,
+			  indents: kpIndentArr,
+			  bulletTypes: bulletType
+		  });
+		  console.log(bulletType );
+		 
+		  
+	  }
+	  
+  }
 
+outputUpdate = (e) => {
+	this.setState({
+		generatedCode: e.target.value		
+	});	
+}
   
   
   render() {   
@@ -197,7 +230,9 @@ class App extends Component {
             cuePoints={this.state.cuePoints}
             updateVideoTime={this.updateVideoTime}
             generatedCode={this.state.generatedCode}
+			loadCode={this.loadCode}
             indents={this.state.indents}
+			outputUpdate={this.outputUpdate}
           />
       </div> 
     );
