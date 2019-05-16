@@ -176,7 +176,7 @@ class App extends Component {
 	  if(this.state.generatedCode.trim() !== ""){
 		  var kpArr = [], kpTrackArr = [], kpIndentArr = [], bulletType = [];
 		 
-		 let list = this.state.generatedCode.split("var");
+		 let list = this.state.generatedCode.split("var ");
 		 
 		 for(var item of list){
 			if(item != ""){
