@@ -19,7 +19,8 @@ class App extends Component {
       currentVideoTime: 0,
       indents: [],
       bulletTypes: [],
-      generatedCode: ""
+      generatedCode: "",
+	  previewMode: false
      }
   }
 
@@ -170,6 +171,27 @@ class App extends Component {
     this.setState( {
       currentVideoTime: time
     })
+	
+	if(this.state.previewMode){
+		this.previewKPSynch(time);
+	}
+  }
+  
+  //Preview KP Synching
+  previewKPSynch = (time)=>{
+	 for(let i=0;i<this.state.cuePoints.length;i++){
+      if(time > this.state.cuePoints[i]){
+        this.setState({
+              curCaptionIndex: i  
+        });
+      }
+    }  
+  }
+  
+  previewModeChange = ()=>{
+	  this.setState({
+		  previewMode: !this.state.previewMode
+	  });
   }
   
   loadCode = () => {
@@ -233,6 +255,7 @@ outputUpdate = (e) => {
 			loadCode={this.loadCode}
             indents={this.state.indents}
 			outputUpdate={this.outputUpdate}
+			previewModeChange={this.previewModeChange}
           />
       </div> 
     );

@@ -58,7 +58,17 @@ class VideoBar extends Component {
                   </video>
                  
                   <div id="waveform"></div>                
-
+				
+				  
+				  {"Preview Mode"}
+				  <div className="switch">
+					<label>
+					{"Off"}
+					  <input type="checkbox" onChange={this.props.previewModeChange}/>
+					  <span className="lever"></span>
+					 	{"On"}
+					</label>
+				  </div>   
               </div>
       
               <div className="col s12 m6">
